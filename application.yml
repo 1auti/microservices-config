@@ -1,25 +1,18 @@
-# Este application.yml - configuracion global
-# Este archivo lo reciben todos los microservicios automaticamente ( es la base de cada servicio )
+# Configuracion global — la reciben todos los microservicios
 
 eureka:
- client:
-  service-url:
-   defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
- instance:
-  prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    prefer-ip-address: true
 
-
-
-# Actuator : expone health en todos los servicios por defecto
 management:
- endpoints:
-  web:
-   exposure:
-    include: health, info
+  endpoints:
+    web:
+      exposure:
+        include: health, info
 
-
-# Esto lo estoy agregando para ver si funciona
-# Desde cualquier microservicio podes inyectar esto con @Value("${app.mensaje}")
 app:
- mensaje: "Configuracion cargada desde el Config service"
- ambiante:${AMBIENTE:desarrollo}
+  mensaje: "Configuracion cargada desde el Config Server"
+  ambiente: ${AMBIENTE:desarrollo}
