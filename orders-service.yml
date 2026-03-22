@@ -1,0 +1,26 @@
+# ============================================================
+# orders-service.yml — configuración específica del servicio de órdenes
+# Solo lo recibe el microservicio con spring.application.name=orders-service
+# Se SUMA a lo que ya recibió de application.yml
+# ============================================================
+
+server:
+  port: 8081
+
+spring:
+  application:
+    name: orders-service
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/orders_db}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASS:postgres}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+
+# Config propia del servicio
+app:
+  orders:
+    max-por-usuario: 10
+    timeout-segundos: 30
