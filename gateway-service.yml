@@ -1,0 +1,25 @@
+server:
+  port: 8080  # Puerto estándar del Gateway — punto de entrada único
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      # Descubrimiento automático: si está en Eureka, el Gateway lo enruta automáticamente
+      # Sin esto tendrías que definir cada ruta manualmente
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true  # Permite usar minúsculas: /orders-service/** en vez de /ORDERS-SERVICE/**
+
+      # Rutas manuales — más control sobre el enrutamiento
+      # Por ahora dejamos una de ejemplo lista para cuando agregues microservicios
+      routes:
+        # Ejemplo de ruta — descomentar cuando tengas el orders-service
+        # - id: orders-service           # Nombre identificador de la ruta
+        #   uri: lb://orders-service     # lb:// = load balancer, busca el servicio en Eureka
+        #   predicates:
+        #     - Path=/api/orders/**      # Toda request que empiece con /api/orders/ va acá
+        #   filters:
+        #     - StripPrefix=1            # Saca el /api del path antes de reenviar al servicio
