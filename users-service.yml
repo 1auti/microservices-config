@@ -1,0 +1,22 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: users-service
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/users_db}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASS:postgres}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      # create-drop: crea las tablas al arrancar y las elimina al apagar (solo desarrollo)
+      # validate: solo valida que las tablas existan (producción)
+      # update: actualiza el esquema si hay cambios (desarrollo)
+      ddl-auto: create-drop
+    show-sql: true                    # Muestra las queries SQL en los logs (útil para debug)
+    properties:
+      hibernate:
+        format_sql: true              # Formatea el SQL para que sea legible en los logs
+        dialect: org.hibernate.dialect.PostgreSQLDialect
