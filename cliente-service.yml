@@ -1,0 +1,35 @@
+server:
+  port: 8082
+
+spring:
+  datasource:
+    # Inyectado por variable de entorno desde docker-compose
+    # En local apunta a localhost, en Docker apunta al contenedor clientes-db
+    url: ${DB_URL:jdbc:postgresql://localhost:5433/clientes_db}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      # create-drop: recrea las tablas en cada arranque (desarrollo)
+      # Cambiar a 'validate' o 'none' en producción con migraciones Flyway
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  # Habilita JPA Auditing — necesario para @CreatedDate, @LastModifiedDate, @CreatedBy
+  # La clase AuditingConfig.java registra el AuditorAware que provee el usuario actual
+  jpa:
+    open-in-view: false   # Evita el antipatrón de sesión abierta en el controller
+
+# Feign: cliente HTTP declarativo para llamar a users-service
+feign:
+  client:
+    config:
+      # 'default' aplica a todos los Feign clients del servicio
+      default:
+        connectTimeout: 5000   # ms para establecer conexión
+        readTimeout: 5000      # ms para esperar respuesta
