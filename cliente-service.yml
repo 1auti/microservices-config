@@ -27,6 +27,8 @@ spring:
 
 # Feign: cliente HTTP declarativo para llamar a users-service
 feign:
+  circuitbreaker:
+    enabled: true
   client:
     config:
       # 'default' aplica a todos los Feign clients del servicio
